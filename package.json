@@ -1,0 +1,19 @@
+{
+  "name": "pg-scaling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pg-process.ts",
+  "scripts": {
+    "start": "ts-node-dev --respawn pg-process.ts",
+    "db": "docker-compose up --build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.18",
+    "pg-promise": "8.6.5",
+    "postgrator": "^3.11.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.3"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true,
+      "module": "commonjs",
+      "target": "esnext",
+      "moduleResolution": "node",
+      "outDir": "dist",
+      "baseUrl": "./",
+      "lib": [
+          "es6",
+          "dom"
+      ],
+      "types": [],
+      "plugins": [{ "transform": "typescript-transform-paths" }]
+  },
+  "include": [
+    "pg-process.ts"
+  ]
+}
