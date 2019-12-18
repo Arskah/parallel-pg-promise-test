@@ -52,12 +52,12 @@ const processPayment = async (payment: DB_obj) => {
 
 // SUPPORT CONCURRENCY
 
-const transaction = (): Promise<string[]> => {
-  return db.tx(t => {
+const transaction = (): Promise<Promise<DB_obj>[]> => {
+  return db.tx((t: IDatabase<any>) => {
     // LIMIT 3
     return t.any("SELECT * FROM payment_session WHERE status = $1 LIMIT 3 FOR UPDATE", [Status.PENDING])
       .then((payments: DB_obj[]) => {
-        return payments.map((payment) => t.any("UPDATE payment_session SET status = $2 WHERE order_id = $1 RETURNING order_id", [payment.order_id, Status.FINISHED]));
+        return payments.map((payment) => t.one("UPDATE payment_session SET status = $2 WHERE order_id = $1 RETURNING order_id", [payment.order_id, Status.FINISHED]));
       });
   });
 };
@@ -68,10 +68,10 @@ const handlePendingPayments = async () => {
   try {
     // const payments = await getPaymentSessions();
     // Promise.all(payments.map(processPayment)).then(() => console.log("All processed"));
-    const results = await transaction();
+    const results = await Promise.all(await transaction());
     if (results.length > 0) {
       console.log("Processed " + results.length + " payments");
-      results.forEach((res) => console.log(res));
+      results.forEach((res) => console.log(res.order_id));
     } else
       console.log("Idle");
 

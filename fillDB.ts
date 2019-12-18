@@ -25,8 +25,8 @@ const postgrator = new Postgrator({
 const pgp: IMain = pgPromise();
 const db: IDatabase<any> = pgp(connection);
 
-const insert = async (db: IDatabase<any>) => {
-  db.none("INSERT INTO payment_session (order_id, status) VALUES ($1, $2)",
+const insert = async (db: IDatabase<any>): Promise<any> => {
+  return db.one("INSERT INTO payment_session (order_id, status) VALUES ($1, $2) RETURNING order_id",
   [
       uid.sync(18),
       "PENDING",
@@ -39,6 +39,8 @@ postgrator.migrate()
   console.log(appliedMigrations);
 
   for (var i = 0; i < 10; i++) {
-    insert(db).catch((err) => console.error(err))
+    insert(db)
+    .then((res) => console.log("Created row " + res.order_id))
+    .catch((err) => console.error(err))
   }
 }).catch(err => console.error(err));
