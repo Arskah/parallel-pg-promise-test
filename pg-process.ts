@@ -71,7 +71,7 @@ const handlePendingPayments = async () => {
     const results = await transaction();
     if (results.length > 0) {
       console.log("Processed " + results.length + " payments");
-      console.log(results);
+      results.forEach((res) => console.log(res));
     } else
       console.log("Idle");
 
@@ -82,3 +82,4 @@ const handlePendingPayments = async () => {
 };
 
 handlePendingPayments();
+// const results = Promise.all([handlePendingPayments(), handlePendingPayments(), handlePendingPayments()]);

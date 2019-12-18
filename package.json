@@ -10,7 +10,8 @@
     "processor3": "ts-node-dev --respawn pg-process.ts",
     "db": "docker-compose up --build",
     "db-down": "docker-compose down",
-    "fill": "ts-node fillDB.ts"
+    "fill": "ts-node fillDB.ts",
+    "test": "run-s fill start"
   },
   "author": "",
   "license": "ISC",
