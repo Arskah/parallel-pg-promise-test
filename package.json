@@ -4,16 +4,23 @@
   "description": "",
   "main": "pg-process.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn pg-process.ts",
-    "db": "docker-compose up --build"
+    "start": "npm-run-all -p processor processor processor",
+    "processor": "ts-node-dev --respawn pg-process.ts",
+    "db": "docker-compose up --build",
+    "db-down": "docker-compose down",
+    "fill": "ts-node fillDB.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.12.18",
+    "@types/uid-safe": "^2.1.2",
+    "npm-run-all": "^4.1.5",
     "pg-promise": "8.6.5",
     "postgrator": "^3.11.0",
+    "ts-node": "^8.5.4",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "uid-safe": "^2.1.5"
   }
 }
