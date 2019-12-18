@@ -1,4 +1,5 @@
 import pgPromise, { IMain, IDatabase } from "pg-promise";
+import monitor from "pg-monitor";
 import { TConnectionParameters } from "pg-promise/typescript/pg-subset";
 
 const connection: TConnectionParameters = {
@@ -9,8 +10,19 @@ const connection: TConnectionParameters = {
   password: "postgres"
 };
 
-const pgp: IMain = pgPromise();
+const initOptions = {
+  // query(e: any) {
+  //   console.log(e.query);
+  // },
+  // transact(e: any) {
+  //   console.log(e)
+  // }
+};
+
+const pgp: IMain = pgPromise(initOptions);
 const db: IDatabase<any> = pgp(connection);
+
+
 
 enum Status {
   STARTED = 'STARTED',
