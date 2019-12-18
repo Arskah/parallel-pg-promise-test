@@ -4,8 +4,10 @@
   "description": "",
   "main": "pg-process.ts",
   "scripts": {
-    "start": "npm-run-all -p processor processor processor",
-    "processor": "ts-node-dev --respawn pg-process.ts",
+    "start": "run-p -l processor1 processor2 processor3",
+    "processor1": "ts-node-dev --respawn pg-process.ts",
+    "processor2": "ts-node-dev --respawn pg-process.ts",
+    "processor3": "ts-node-dev --respawn pg-process.ts",
     "db": "docker-compose up --build",
     "db-down": "docker-compose down",
     "fill": "ts-node fillDB.ts"
