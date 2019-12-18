@@ -55,7 +55,7 @@ const processPayment = async (payment: DB_obj) => {
 const transaction = (): Promise<string[]> => {
   return db.tx(t => {
     // LIMIT 3
-    return t.any("SELECT * FROM payment_session WHERE status = $1 FOR UPDATE", [Status.PENDING])
+    return t.any("SELECT * FROM payment_session WHERE status = $1 LIMIT 3 FOR UPDATE", [Status.PENDING])
       .then((payments: DB_obj[]) => {
         return payments.map((payment) => t.any("UPDATE payment_session SET status = $2 WHERE order_id = $1 RETURNING order_id", [payment.order_id, Status.FINISHED]));
       });
